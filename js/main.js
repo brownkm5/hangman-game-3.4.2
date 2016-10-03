@@ -33,14 +33,16 @@ var filteredWords= commonWords.filter(function(words){
 
 document.getElementById("guess").addEventListener("click", letterInputFunction);
 function letterInputFunction () {
+  var answerDisplayDiv = document.getElementById("display-answer");
 //   var numberOfGuesses = document.querySelector("number-of-guesses");
 //   numberOfGuesses=numberOfGuesses-1;
 // console.log(numberOfGuesses);
     var letterInput = [];
     letterInput.push(document.getElementsByName('letter')[0].value);
-    var answerDisplayDiv = document.getElementById("display-answer");
-    if (splitWord.includes(letterInput)) {
-          var answerContent = ("The word contains: " + letterInputFunction);
+    console.log(letterInput);
+    for (var i = 0; i < spanGenerator.length; i++) {
+    if (spanGenerator.indexOf(letterInput)) {
+          var answerContent = ("The word contains: " + letterInputFunction).textContent;
           answerDisplayDiv.appendChild(answerContent);
           document.body.insertAfter(answerContent, answerDisplayDiv);
       }
@@ -50,16 +52,17 @@ function letterInputFunction () {
         document.body.insertAfter(answerContent, answerDisplayDiv);
       }
     }
-
+}
 
 var splitWord = function(){
   var randomWord=generateRandWord(filteredWords);
   var randomWordArray = randomWord.split('');
   return randomWordArray;
+  console.log(randomWordArray);
 }
 
 var spanGenerator=splitWord();
-console.log(spanGenerator);
+console.log('span', spanGenerator);
 
 spanGenerator.forEach(function(letter){
 var newSpan = document.createElement('span');
