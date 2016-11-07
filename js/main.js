@@ -1,7 +1,12 @@
 (function(){
+$(function(){
+
 
   var alphabet = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h','i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's',
   't', 'u', 'v', 'w', 'x', 'y', 'z'];
+var hangmanForm = $('.hangman');
+
+
 
 function generateRandWord(commonWords){
 var rand = commonWords[Math.floor(Math.random() * commonWords.length)];
@@ -12,46 +17,36 @@ var filteredWords= commonWords.filter(function(words){
   return words.length>2;
 });
 
-// var buttons = function(){
-//   var myButtons = document.createElement('div');
-//   myButtons.id = 'letters'
-//   var letters = document.createElement('ul');
-//   myButtons.appendChild(letters); //puts the ul in the div
-//
-//   for (var i = 0; i < alphabet.length; i++) {
-//     letters.id = 'alphabet';
-//     var list = document.createElement('button');
-//
-//     list.textContent = alphabet[i];
-//     letters.appendChild(list); //puts the letters in the ul
-//     var currentDiv = document.querySelector('.div-one');
-//     document.body.insertBefore(myButtons, currentDiv);
-//   }
-// }
-// buttons();
-// var letterInput = document.getElementsByName('letter')[0].value
+
+var currentNumberOfGuesses = document.getElementById('number-of-guesses');
+var numberOfGuesses= 8;
 
 document.getElementById("guess").addEventListener("click", letterInputFunction);
+
 function letterInputFunction () {
   var answerDisplayDiv = document.getElementById("display-answer");
-//   var numberOfGuesses = document.querySelector("number-of-guesses");
-//   numberOfGuesses=numberOfGuesses-1;
-// console.log(numberOfGuesses);
-    var letterInput = [];
-    letterInput.push(document.getElementsByName('letter')[0].value);
-    console.log(letterInput);
-    for (var i = 0; i < spanGenerator.length; i++) {
-    if (spanGenerator.indexOf(letterInput)) {
-          var answerContent = ("The word contains: " + letterInputFunction).textContent;
-          answerDisplayDiv.appendChild(answerContent);
-          document.body.insertAfter(answerContent, answerDisplayDiv);
-      }
-      else {
-        var answerContent = ("The word does not contains: " + letterInputFunction);
-        answerDisplayDiv.appendChild(answerContent);
-        document.body.insertAfter(answerContent, answerDisplayDiv);
-      }
-    }
+  var $letterInput = $('#letter'),
+      guess = $letterInput.val();
+
+  numberOfGuesses = numberOfGuesses - 1;
+  currentNumberOfGuesses.textContent = numberOfGuesses;
+
+  if (numberOfGuesses === 0) {
+    $('#guess').hide();
+    return;
+  }
+
+  $letterInput.val('');
+
+  $(answerDisplayDiv).append(guess);
+
+  for (var i = 0; i < wordToGuess.length; i++) {
+    if (wordToGuess[i] == guess) {
+      $('.' + guess).html(guess);
+      var guesses = [];
+      guesses.add(guess);
+      console.log(guesses);
+  }
 }
 
 var splitWord = function(){
@@ -61,14 +56,19 @@ var splitWord = function(){
   console.log(randomWordArray);
 }
 
-var spanGenerator=splitWord();
-console.log('span', spanGenerator);
+var wordToGuess=splitWord();
+console.log('span', wordToGuess);
 
-spanGenerator.forEach(function(letter){
-var newSpan = document.createElement('span');
+wordToGuess.forEach(function(letter){
+var newSpan = document.createElement('p');
 newSpan.className = letter;
-var wordToGuess = document.querySelector('.word-to-guess');
-wordToGuess.appendChild(newSpan);
+var word = document.querySelector('.guess');
+word.appendChild(newSpan);
+
+
 })
 
+
+
+});
 }());

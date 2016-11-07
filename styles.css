@@ -1,8 +1,11 @@
 span{
-  height: 20px;
-  border-bottom: 3px solid black;
+  height: 60px;
+  width: 40px;
+  /*border-bottom: 3px solid black;*/
+  display: inline-block;
+  margin: 0 30px;
 }
-/*div{
+div{
   height: 200px;
   background-color: red;
-}*/
+}
